@@ -31,14 +31,7 @@ public class Collecting {
     }
 
     public double averageTotalScore(Stream<CourseResult> stream) {
-        List<CourseResult> listTasks = stream.collect(toList());
-
-        return listTasks.stream()
-                .map(courseResult -> courseResult.getTaskResults().entrySet())
-                .flatMap(Collection::stream)
-                .map(Map.Entry::getValue)
-                .mapToDouble(i -> i)
-                .sum() / amountOfTasks(listTasks) / amountOfPersons(listTasks);
+        return totalScores(stream).values().stream().collect(averagingDouble(a -> a));
     }
 
     public Map<String, Double> averageScoresPerTask(Stream<CourseResult> stream) {
